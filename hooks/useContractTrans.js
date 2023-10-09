@@ -1,6 +1,6 @@
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import ERC20 from '../abi/erc20InstacnceAbi.json'
-import WasteInsure from '../abi/wasteInsured.json'
+import ERC20 from '../abis/erc20InstacnceAbi.json'
+import CarRent from "../abis/carrent.json"
 import { BigNumber } from "ethers";
 
 export const useContractTrans = (wasteAmount) => {
@@ -10,10 +10,11 @@ export const useContractTrans = (wasteAmount) => {
         address: ERC20.address,
         abi: ERC20.abi,
         functionName: 'approve',
-        args: [WasteInsure.address, wasteAmount],
+        args: [CarRent.address, wasteAmount],
         overrides: {
             gasLimit
         },
+        
         onError: (err) => {
             console.log({ err });
         }

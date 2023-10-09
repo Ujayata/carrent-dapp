@@ -1,12 +1,11 @@
 import { useContractRead } from "wagmi";
-import WasteinsuredAbi from '../abi/wasteInsured.json'
-
+import CarRent from "../abis/carrent.json"
 export const useContractCall = (functionName, args, watch) => {
 
     const resp = useContractRead({
 
-        address: WasteinsuredAbi.address,
-        abi: WasteinsuredAbi.abi,
+        address: CarRent.address,
+        abi: CarRent.abi,
         functionName: functionName,
         args,
         watch,

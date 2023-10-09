@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { publicProvider } from "wagmi/providers/public"
 import { celo, celoAlfajores } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-// import {} from ""
+import { CeloWallets} from "@celo/rainbowkit-celo"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -40,7 +40,7 @@ const connectors = connectorsForWallets([
       groupName: "Recommended with Celo",
       wallets: [
           // Valora({ projectId , chains}),
-          // CeloWallet({ projectId, chains }),
+          // CeloWallets({ chains }),
           metaMaskWallet({projectId, chains }),
           omniWallet({ projectId,  chains }),
           walletConnectWallet({ projectId, chains })

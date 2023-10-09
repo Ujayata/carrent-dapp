@@ -16,19 +16,10 @@ export default function Navbar() {
   return (
     <header className="pt-4 container mx-auto px-8">
       <nav className=" flex justify-between ">
-        {/* <div className="w-[60px] sm:w-[80px] cursor-pointer">
-          <img alt="logo" src={NavBarLogo} />
-        </div> */}
         <div className="hidden sm:flex cursor-pointer gap-3 mt-[30px]">
-          <h3 className="text-[#282e82] text-sm font-normal leading-none">
-            <Link href="/">Home</Link>
+          <h3 className="text-[#2e37ba] text-4xl max-sm:text-2xl font-bold leading-none">
+            Car Tour
           </h3>
-          {/* <h3 className="text-[#282e82] text-sm font-normal leading-none">
-            <Link to="/dashboard">Dashboard</Link>
-          </h3>
-          <h3 className="text-[#282e82] text-sm font-normal leading-none">
-            <Link to="/hospital">Hospital</Link>
-          </h3> */}
         </div>
         <div className="hidden  sm:flex mt-[20px] ">
           <ConnectButton  />
