@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 // import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -15,14 +15,14 @@ export default function Navbar() {
 
   return (
     <header className="pt-4 container mx-auto px-8">
-      <nav className=" flex justify-between ">
-        <div className="hidden sm:flex cursor-pointer gap-3 mt-[30px]">
+      <nav className=" flex justify-between items-center mt-[30px]">
+        <div className=" sm:flex cursor-pointer gap-3">
           <h3 className="text-[#2e37ba] text-4xl max-sm:text-2xl font-bold leading-none">
             Car Tour
           </h3>
         </div>
         <div className="hidden  sm:flex mt-[20px] ">
-          <ConnectButton  />
+          <ConnectButton />
         </div>
 
         <div className="md:hidden  mt-3">
@@ -37,20 +37,21 @@ export default function Navbar() {
       </nav>
 
       {isOpen && (
-        <div className="fixed z-20 top-0 bg-[#282e82] 
-         right-0 bottom-0 left-0 flex flex-col 
-         items-center gap-6 justify-center">
+        <div
+          className="fixed 
+         flex flex-col 
+         items-center gap-6 justify-center"
+        >
           <button
-            className="text-white absolute top-4 right-4"
+            className="text-white absolute top-12 right-4"
             onClick={toggleMenu}
           >
             <FaTimes className="text-2xl" />
           </button>
 
-
-          <div className="flex">
-          <ConnectWallet />
-        </div>
+          <div className="  sm:flex mt-[20px] ">
+            <ConnectButton />
+          </div>
         </div>
       )}
     </header>
