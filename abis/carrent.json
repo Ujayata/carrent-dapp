@@ -1,5 +1,5 @@
 {
-    "address": "0xF9236e51257637214662F1dB23C0f2114468eC33",
+    "address": "0x00Ee35c5a78952d8DD88BCF252eD62b29ec15E52",
     "abi": [
         {
             "inputs": [
@@ -58,19 +58,6 @@
             "type": "function"
         },
         {
-            "inputs": [],
-            "name": "carLength",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "inputs": [
                 {
                     "internalType": "uint256",
@@ -81,6 +68,19 @@
             "name": "carRentPayment",
             "outputs": [],
             "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "carLength",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
             "type": "function"
         },
         {

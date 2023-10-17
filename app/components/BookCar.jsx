@@ -23,7 +23,7 @@ const BookCar = () => {
         "you want to travel and fell confortable , our drivers are available.",
     },
   ];
-  // console.log(ourServices);
+  console.log(ourServices);
   return (
     <div className=" mt-[24px] flex justify-center items-center flex-col">
       <div className=" flex flex-col items-center  bg-[#C4C4C4] w-[832px] h-[248px] max-sm:w-[384px] max-sm:h-[140px]">
