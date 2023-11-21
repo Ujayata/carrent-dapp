@@ -42,8 +42,8 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
     <div className="pt-4 container flex justify-center items-center flex-col">
       <div className=" w-[23rem] bg-[#EFAE07] text-base font-semibold rounded-xl">
         <div>
-
-        <Image src={`https://bafybeidpovsjaqre7dc7jpgaz2xldr7vqmguyzqx75mnebymrhsgi4eaeq.ipfs.w3s.link/?filename=car.jpg`} width={368} height={200} alt="carImg" className="" />
+        <Image src={carData.image} className=' w-[100%] h-[100%]' decoding='async' alt='CarImage' width={200} height={200} />
+        {/* <Image src={`https://bafybeidpovsjaqre7dc7jpgaz2xldr7vqmguyzqx75mnebymrhsgi4eaeq.ipfs.w3s.link/?filename=car.jpg`} width={368} height={200} alt="carImg" className="" /> */}
         </div>
         <div className=" flex flex-col items-center justify-center pt-3">
           <div className=" flex flex-row gap-8 text-center">

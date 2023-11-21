@@ -3,12 +3,14 @@ import { IoCloseCircle } from 'react-icons/io5'
 import React, { useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import { parseEther } from 'ethers'
+import { toast } from "react-toastify"
 import { useContractSend } from '@/hooks/useContractWrite'
 
 const RentCarModal = ({ id }) => {
     const [toggle, setToggle] = useState(false)
     const [Name, setName] = useState("")
     const [destination, setDestination] = useState("")
+    const [loading, setLoading] = useState(false)
     const [amount, setAmount] = useState("")
 
     const handleClear = () => {
@@ -26,7 +28,7 @@ const RentCarModal = ({ id }) => {
       debounceAmount.toString() || "0"
     );
 
-    const { writeAsync: rentCar } = useContractSend("", [
+    const { writeAsync: rentCar } = useContractSend("addRent", [
       id,
       debouncedName, 
       debounceDestination,
@@ -35,10 +37,12 @@ const RentCarModal = ({ id }) => {
 
     const handleRentCar = async () => {
       if(!rentCar) throw new Error("Failed Renting car")
-      
+      setLoading("Hiring Car");
       if(!isFormFilled) throw Error("Form not filled")
 
-      await rentCar();
+      const rent = await rentCar();
+      setLoading("Waiting for confirmation");
+      await rent;
       setToggle(false);
 
       handleClear();
@@ -50,7 +54,7 @@ const RentCarModal = ({ id }) => {
       try {
           await toast.promise(
               handleRentCar(), {
-                  pending: "Get Car ready",
+                  pending: "Getting Car ready",
                   success: "Car Successfully Book. Safe Trip",
                   error: "Error hiring kindly try again or Contact Us."
               }
@@ -72,7 +76,7 @@ const RentCarModal = ({ id }) => {
         className=" text-white font-bold text-lg border-2 rounded-xl py-1 bg-[#06102b] px-3 flex items-center mr-10 flex-col text-center drop-shadow-xl"
         onClick={() => setToggle(true)}
       >
-        Hire Car
+        Hire Me
       </button>
       {toggle && (
         // w-[600px] rounded-2xl bg-slate-100 p-5
@@ -81,7 +85,7 @@ const RentCarModal = ({ id }) => {
           className="flex justify-center fixed left-0 top-0 items-center w-full h-full mt-6"
         >
           <div className="w-[600px] rounded-2xl bg-slate-100 p-5">
-            <form >
+            <form onSubmit={hireCar} >
               <div className="mb-8">
                 <input
                   type="text"
@@ -117,12 +121,12 @@ const RentCarModal = ({ id }) => {
                 <button
                   type="submit"
                   className=" border-4 text-white border-[#EFAE07] bg-[#06102b] px-4 py-2 rounded-full"
-                  // disabled={!!loading || !isFormFilled || !recordCar}
+                  disabled={!!loading || !isFormFilled || !rentCar}
                 >
-                  {/* {loading ? loading : "Ordering car"} */} Hiring Car
+                  {loading ? loading : "Hiring car"} 
                 </button>
                 <button type="button" onClick={() => setToggle(false)}>
-                  <IoCloseCircle size={30} color="#2e37ba" />
+                  <IoCloseCircle size={30} color="#06102b" />
                 </button>
               </div>
             </form>

@@ -35,12 +35,12 @@ const RentDetails = ({ params }) => {
 
   return (
     <div className='pt-4 container  px-8 flex lg:flex-row justify-center items-center  lg:gap-[16rem] md:gap-[5rem] sm:gap-[5rem] max-sm:gap-[3rem] md:flex-col max-sm:flex-col'>
-      <div className=' lg:w-96 md:w-96 sm:w-72'>
+      <div className=' lg:w-96 md:w-96 sm:w-72 rounded-lg bg-black'>
       <Image src={carDetails.image} className=' w-[100%] h-[100%]' decoding='async' alt='CarImage' width={200} height={200} />
       </div>
-        <div className=" lg:w-96 md:w-96 sm:w-72 bg-[#EFAE07] text-base font-semibold rounded-br-xl flex justify-center items-center p-3">
-      <div className=" flex justify-center items-center flex-col">
-        <div className=" flex flex-row gap-8 text-center justify-center items-center">
+        <div className="  bg-white text-base font-semibold rounded-br-xl flex justify-center items-center text-center">
+      <div className=" flex justify-between items-center flex-col">
+        <div className=" flex flex-row gap-8  text-center justify-center items-center space-x-9">
           <span>
             <p className=" rounded-md border-1 border cursor-pointer bg-white p-2">
               Booking Account
@@ -54,7 +54,7 @@ const RentDetails = ({ params }) => {
             <p  className="pt-2">{carDetails.model}</p>
           </span>
         </div>
-        <div className=" text-center mt-4 flex flex-row gap-9">
+        <div className=" text-center mt-4 flex flex-row gap-8 space-x-9">
           <div>
             <p className="rounded-md border-1 border cursor-pointer bg-white p-2">
               Plate Number
