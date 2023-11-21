@@ -1,6 +1,9 @@
 'use client'
 import { IoCloseCircle } from 'react-icons/io5'
 import React, { useState } from 'react'
+import { useDebounce } from 'use-debounce'
+import { parseEther } from 'ethers'
+import { useContractSend } from '@/hooks/useContractWrite'
 
 const RentCarModal = ({ id }) => {
     const [toggle, setToggle] = useState(false)
@@ -8,6 +11,56 @@ const RentCarModal = ({ id }) => {
     const [destination, setDestination] = useState("")
     const [amount, setAmount] = useState("")
 
+    const handleClear = () => {
+      setName("")
+      setDestination("")
+      setAmount("")
+    }
+    const isFormFilled = Name && destination && amount
+
+    const [ debouncedName ] = useDebounce(Name, 500);
+    const [ debounceDestination ] = useDebounce(destination, 500);
+    const [ debounceAmount ] = useDebounce(amount, 500)
+
+    const convertHireAmount = parseEther(
+      debounceAmount.toString() || "0"
+    );
+
+    const { writeAsync: rentCar } = useContractSend("", [
+      id,
+      debouncedName, 
+      debounceDestination,
+      debounceAmount
+    ])
+
+    const handleRentCar = async () => {
+      if(!rentCar) throw new Error("Failed Renting car")
+      
+      if(!isFormFilled) throw Error("Form not filled")
+
+      await rentCar();
+      setToggle(false);
+
+      handleClear();
+
+    }
+    const hireCar = async(e) => {
+      console.log("renting car");
+      e.preventDefault();
+      try {
+          await toast.promise(
+              handleRentCar(), {
+                  pending: "Get Car ready",
+                  success: "Car Successfully Book. Safe Trip",
+                  error: "Error hiring kindly try again or Contact Us."
+              }
+          )
+      } catch (e) {
+          console.log({ e })
+          toast.error(e?.message || "Something Went wrong. Try again or contact the admin")
+      }
+    };
+ 
 
   return (
     <div className="flex mb-10">

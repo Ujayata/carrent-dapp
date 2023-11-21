@@ -17,9 +17,10 @@ export default function Navbar() {
     <header className="pt-4 container mx-auto px-8">
       <nav className=" flex justify-between items-center mt-[30px]">
         <div className=" sm:flex cursor-pointer gap-3">
+          <Link href="/">
           <h3 className="text-[#2e37ba] text-4xl max-sm:text-2xl font-bold leading-none">
             Car Tour
-          </h3>
+          </h3></Link>
         </div>
         <div className="hidden  sm:flex mt-[20px] ">
           <ConnectButton />

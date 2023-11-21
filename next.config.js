@@ -10,6 +10,9 @@ const nextConfig = {
       defaultLocale: 'en-US',
       localeDetection: true,
     },
+    images: {
+      domains: ['gold-thorough-bobolink-856.mypinata.cloud', 'bafybeidpovsjaqre7dc7jpgaz2xldr7vqmguyzqx75mnebymrhsgi4eaeq.ipfs.w3s.link']
+    },
   };
 
 module.exports = nextConfig

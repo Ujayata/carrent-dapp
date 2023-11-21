@@ -23,10 +23,9 @@ const BookCar = () => {
         "you want to travel and fell confortable , our drivers are available.",
     },
   ];
-  console.log(ourServices);
   return (
-    <div className=" mt-[24px] flex justify-center items-center flex-col">
-      <div className=" flex flex-col items-center  bg-[#C4C4C4] w-[832px] h-[248px] max-sm:w-[384px] max-sm:h-[140px]">
+    <div className=" mt-[24px] max-sm:mt-[40px] flex justify-center items-center flex-col">
+      <div className=" flex flex-col items-center  bg-[#C4C4C4] w-[832px] h-[248px] max-sm:w-[384px] max-sm:h-[180px]">
         <h2 className=" text-2xl font-bold text-[#081630] mb-6 mt-11 max-sm:mb-1 max-sm:mt-1 max-sm:font-medium max-sm:text-sm">
           Book your drean car now!
         </h2>
@@ -36,7 +35,7 @@ const BookCar = () => {
           need is your ID and you can book any car.
         </p>
       </div>
-      <div className=" flex flex-row max-sm:flex-col justify-between mt-[103px]">
+      <div className=" flex flex-row max-sm:flex-col justify-between mt-[103px] max-sm:mx-2">
         <div className=" w-[817px] h-[485px] max-md:w-[456px] max-md:h-[270px] max-sm:w-[233px] max-sm:h-[137px]">
           <Image src={mercedies} alt="car" width={600} height={385} />
         </div>
