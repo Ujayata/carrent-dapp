@@ -93,14 +93,14 @@ const RentDetails = ({ params }) => {
             <div className="">
               {carDetails.carStatus == 0 ? (
                 <button
-                  className="text-[#2e37ba] p-2 bg-slate-200 rounded-lg text-lg flex justify-center items-center"
+                  className="bg-[#2e37ba] p-2 text-white rounded-lg text-lg flex justify-center items-center"
                   onClick={approveCar}
                 >
                   {aprroveLoading && <LoadingIcon />}
                   Approve
                 </button>
               ) : (
-                <button className=" cursor-not-allowed text-[#2e37ba] p-2 bg-slate-200 rounded-lg text-lg flex justify-center items-center">
+                <button className=" cursor-not-allowed bg-[#2e37ba] p-2 text-white rounded-lg text-lg flex justify-center items-center">
                   Approved
                 </button>
               )}
@@ -108,7 +108,7 @@ const RentDetails = ({ params }) => {
             <div>
               {carDetails.carStatus == 1 ? (
                 <button
-                  className="flex items-center justify-center  text-[#2e37ba] p-2 bg-slate-200 rounded-lg text-lg "
+                  className="flex items-center justify-center  bg-[#2e37ba] p-2 text-white  rounded-lg text-lg "
                   onClick={rejectCar}
                   
                 >
@@ -117,7 +117,7 @@ const RentDetails = ({ params }) => {
                 </button>
               ) : (
                 <button
-                  className=" cursor-not-allowed flex items-center justify-center  text-[#2e37ba] p-2 bg-slate-200 rounded-lg text-lg "
+                  className=" cursor-not-allowed flex items-center justify-center  bg-[#2e37ba] p-2 text-white rounded-lg text-lg "
                 >
                   Rejected
                 </button>
@@ -129,7 +129,7 @@ const RentDetails = ({ params }) => {
             <p>Check back</p>
           </div>
         )}
-      {isPaid == false ? "Not Available" : <RentCarModal id={params} />}
+      {isPaid == false ? "Not Available for hire" : <RentCarModal id={params} />}
       </div>
       {/* <RentCarModal id={params} /> */}
       <div className="pt-4 container  px-8 flex lg:flex-row justify-center items-center  lg:gap-[16rem] md:gap-[5rem] sm:gap-[5rem] max-sm:gap-[3rem] md:flex-col max-sm:flex-col">

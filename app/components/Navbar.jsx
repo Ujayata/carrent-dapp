@@ -4,7 +4,6 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
-// import NavBarLogo from '../assets/wasteisureLogo.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +19,12 @@ export default function Navbar() {
           <Link href="/">
           <h3 className="text-[#2e37ba] text-4xl max-sm:text-2xl font-bold leading-none">
             Car Tour
+          </h3></Link>
+        </div>
+        <div className=" sm:flex cursor-pointer gap-3">
+          <Link href="/car">
+          <h3 className="text-[#2e37ba] text-2xl max-sm:text-xl font-bold leading-none">
+            Hire Car
           </h3></Link>
         </div>
         <div className="hidden  sm:flex mt-[20px] ">
