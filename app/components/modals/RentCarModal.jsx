@@ -28,17 +28,19 @@ const RentCarModal = ({ id }) => {
       debounceAmount.toString() || "0"
     );
 
-    const { writeAsync: rentCar } = useContractSend("addRent", [
+    const { write: rentCar, error: err, isError } = useContractSend("addRent", [
       id,
       debouncedName, 
       debounceDestination,
       debounceAmount
     ])
 
+    console.log(err?.message)
+
     const handleRentCar = async () => {
-      if(!rentCar) throw new Error("Failed Renting car")
+      if(!rentCar) throw Error("Car is not approve for useage, Check another Car")
       setLoading("Hiring Car");
-      if(!isFormFilled) throw Error("Form not filled")
+      if(!isFormFilled) throw new Error("Form not filled")
 
       const rent = await rentCar();
       setLoading("Waiting for confirmation");
@@ -85,7 +87,8 @@ const RentCarModal = ({ id }) => {
           className="flex justify-center fixed left-0 top-0 items-center w-full h-full mt-6"
         >
           <div className="w-[600px] rounded-2xl bg-slate-100 p-5">
-            <form onSubmit={hireCar} >
+            <form onSubmit={hireCar}>
+              <p className=' text-black'>{isError ? err?.message : ""}</p>
               <div className="mb-8">
                 <input
                   type="text"

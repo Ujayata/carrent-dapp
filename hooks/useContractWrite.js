@@ -1,6 +1,7 @@
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { toBigInt } from 'ethers';
 import CarRent from "../abis/carrent.json"
+import { toast } from "react-toastify"
 
 export const useContractSend = (functionName, args) => {
     // gas limit to use when sending transaction
@@ -8,7 +9,7 @@ export const useContractSend = (functionName, args) => {
     // const gasList = 
     const gasLimit = toBigInt(1000000)
 
-    const {config} = usePrepareContractWrite({
+    const {config, error} = usePrepareContractWrite({
         // the address of the car rent contract
         address: CarRent.address,
         // the abi of the contract of the car rent
@@ -20,10 +21,11 @@ export const useContractSend = (functionName, args) => {
         },
         onError: (err) => {
             console.log(err);
+            // toast.error(err.message)
         }
         
     })
 
-    const {data, isSuccess, write, writeAsync, error, isLoading} = useContractWrite(config)
-    return { data, isSuccess, write, writeAsync, isLoading}
+    const {data, isSuccess, write, writeAsync, isLoading, isError} = useContractWrite(config, )
+    return { data, isSuccess, write, writeAsync, isLoading, error, isError}
 }
