@@ -18,7 +18,7 @@ const CarList = () => {
     setLoading("");
   };
 
-  //   to display all the cars we have for hire
+  // to display all the cars we have for hire
   const getCarLength = () => {
     if (!carLength) return null;
     const registeredCar = [];

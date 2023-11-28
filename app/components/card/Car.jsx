@@ -61,12 +61,6 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
   return (
     <>
     <div className="pt-4 container flex justify-center items-center flex-col">
-          <span className="  ">
-          {carData.carStatus == 0 ? (<button className="text-[#2e37ba] p-2 bg-slate-200 rounded-t-lg text-lg " onClick={approveCar}>Approve</button>) :(
-            <button className="text-[#2e37ba] p-2 bg-slate-200 rounded-t-lg text-lg " >Approved</button>
-            )
-      }
-          </span>
       <div className=" w-[23rem] bg-[#EFAE07] text-base font-semibold rounded-xl">
         <div>
         <Image src={carData.image} className=' w-[100%] h-[100%]' decoding='async' alt='CarImage' width={200} height={200} />

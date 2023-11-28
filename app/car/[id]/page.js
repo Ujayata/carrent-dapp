@@ -6,6 +6,7 @@ import CarDetails from "@/app/components/carDetails";
 import RentCarModal from "@/app/components/modals/RentCarModal";
 import RentsDetails from "@/app/components/RentsDetails";
 import RentHistory from "@/app/components/card/RentHistory";
+import HireTrnsactions from "@/app/components/listcard/HireTrnsactions";
 
 const CarBook = ({ params }) => {
 
@@ -21,8 +22,11 @@ const CarBook = ({ params }) => {
           {/* <CarDetails /> */}
           <RentsDetails params={params.id} />
           <div>
-            <RentHistory id={params.id} />
+            {/* <RentHistory id={params.id} /> */}
           </div>
+      <div>
+        <HireTrnsactions />
+      </div>
         </div>
       </div>
     </div>

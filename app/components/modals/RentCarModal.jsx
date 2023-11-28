@@ -11,7 +11,7 @@ const RentCarModal = ({ id }) => {
     const [Name, setName] = useState("")
     const [destination, setDestination] = useState("")
     const [loading, setLoading] = useState(false)
-    // const [amount, setAmount] = useState("")
+    
 
     const handleClear = () => {
       setName("")
@@ -21,18 +21,13 @@ const RentCarModal = ({ id }) => {
 
     const [ debouncedName ] = useDebounce(Name, 500);
     const [ debounceDestination ] = useDebounce(destination, 500);
-    // const [ debounceAmount ] = useDebounce(amount, 500)
-
-    // const convertHireAmount = ethers.utils.parseEther(
-    //   debounceAmount.toString() || "0"
-    // );
+    
 
     const { write: rentCar, error: err, isError } = useContractSend("addRent", [
       id,
       debouncedName, 
       debounceDestination,
-      // debounceAmount
-    ])
+      ])
 
     console.log(err?.message)
 
@@ -74,13 +69,13 @@ const RentCarModal = ({ id }) => {
         type="button"
         data-bs-toggle="modalBioData"
         data-bs-target="#modalCenter"
-        className=" text-white font-bold text-lg border-2 rounded-xl py-1 bg-[#06102b] px-3 flex items-center mr-10 flex-col text-center drop-shadow-xl"
+        className=" text-black font-bold text-lg border-2 rounded-xl py-1 border-[#06102b] px-3 flex items-center mr-10 flex-col text-center drop-shadow-xl"
         onClick={() => setToggle(true)}
       >
         Hire Me
       </button>
       {toggle && (
-        // w-[600px] rounded-2xl bg-slate-100 p-5
+       
         <div
           id="modalBioData"
           className="flex justify-center fixed left-0 top-0 items-center w-full h-full mt-6"

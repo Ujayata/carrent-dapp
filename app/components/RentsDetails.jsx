@@ -92,14 +92,14 @@ const RentDetails = ({ params }) => {
             <div className="">
               {carDetails.carStatus == 0 ? (
                 <button
-                  className="bg-[#2e37ba] p-2 text-white rounded-lg text-lg flex justify-center items-center"
+                  className="border-2 border-[#06102b] p-2 text-black rounded-lg text-lg flex justify-center items-center"
                   onClick={approveCar}
                 >
                   {aprroveLoading && <LoadingIcon />}
                   Approve
                 </button>
               ) : (
-                <button className=" cursor-not-allowed bg-[#2e37ba] p-2 text-white rounded-lg text-lg flex justify-center items-center">
+                <button className=" cursor-not-allowed border-2 border-[#06102b] p-2 text-black rounded-lg text-lg flex justify-center items-center">
                   Approved
                 </button>
               )}
@@ -107,7 +107,7 @@ const RentDetails = ({ params }) => {
             <div>
               {carDetails.carStatus == 1 ? (
                 <button
-                  className="flex items-center justify-center  bg-[#2e37ba] p-2 text-white  rounded-lg text-lg "
+                  className="flex items-center justify-center border-2 border-[#06102b] p-2 text-black  rounded-lg text-lg "
                   onClick={rejectCar}
                   
                 >
@@ -116,7 +116,7 @@ const RentDetails = ({ params }) => {
                 </button>
               ) : (
                 <button
-                  className=" cursor-not-allowed flex items-center justify-center  bg-[#2e37ba] p-2 text-white rounded-lg text-lg "
+                  className=" cursor-not-allowed flex items-center justify-center border-2 border-[#06102b] p-2 text-black rounded-lg text-lg "
                 >
                   Rejected
                 </button>

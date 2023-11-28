@@ -39,6 +39,7 @@ contract CarBooking is AccessControl {
     
     struct Rent {
         uint256 carID;
+        address carAddress;
         address BookingAcount;
         string name;
         string destination;
@@ -112,12 +113,14 @@ contract CarBooking is AccessControl {
         require(car.orderStatus == OrderStatus.OPEN , "Car is alreadly on hire");
         Rent memory newRent = Rent({
             carID: _carID,
+            carAddress: car.owner,
             BookingAcount: msg.sender,
             name: _name,
             destination: _destination,
             amount: car.bookingPrice,
             paid: false
         });
+        rentLength++;
         cars[_carID].orderStatus = OrderStatus.INPROGRESS; 
         cars[_carID].carRent.push(newRent);
     }
@@ -145,6 +148,7 @@ contract CarBooking is AccessControl {
     function getRent(uint256 _index) public view returns (
         uint256,
         address,
+        address,
         string memory,
         string memory,
         uint256,
@@ -153,6 +157,7 @@ contract CarBooking is AccessControl {
         Car storage car = cars[_index];
         return (
             car.carRent[_index].carID,
+            car.carRent[_index].carAddress,
             car.carRent[_index].BookingAcount,
             car.carRent[_index].name,
             car.carRent[_index].destination,
@@ -173,6 +178,7 @@ contract CarBooking is AccessControl {
 
     function carRentPayment(uint256 _index) external payable  {
         Car storage car = cars[_index];
+        require(msg.sender == car.carRent[_index].BookingAcount, "Must be the owner");
         require(IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
             cars[_index].owner,

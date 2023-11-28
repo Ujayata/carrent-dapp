@@ -5,12 +5,10 @@ import { identiconTemplate } from "../../utils/identiconTemplate";
 import { useAccount } from "wagmi";
 import { useContractCall } from "@/hooks/useContractRead";
 import { ethers } from "ethers";
-import { getStatus } from "@/app/helper/getRentStatus";
 import { useContractTrans } from "@/hooks/useContractTrans";
 import { useContractSend } from "@/hooks/useContractWrite";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
-import { approveMsg } from "@/app/helper/carrent";
 
 const RentHistory = ({ id }) => {
   const { address } = useAccount();
@@ -81,8 +79,7 @@ const RentHistory = ({ id }) => {
         error: "unexpected error",
       });
     } catch (e) {
-      console.log({ e });
-      //   setError(e?.reason || e?.message || "Something happen. Try again later")
+    //   console.log({ e });
     }
   };
 
@@ -90,33 +87,47 @@ const RentHistory = ({ id }) => {
 
   const convertHireAmount = ethers.utils.formatEther(rentDetails?.amount?.toString());
   console.log(rentDetails?.amount.toString());
+  console.log(rentDetails.carID)
 
   return (
     <div className=" flex items-center justify-center mt-5">
-      <div className=" w-[402px] h-[270px] bg-[#2e37ba] text-white rounded-lg flex flex-col justify-center  max-sm:w-[350px]">
-        <div className=" flex justify-between px-4 items-center mt-[20px]">
-          {identiconTemplate(rentDetails.bookingAccount, 12)}
-          <button
-            className=" rounded-lg w-[100px] h-[44px] border-black border bg-white text-[#2e37ba] font-medium"
-            onClick={payment}
-          >
-            Payment
-          </button>
-        </div>
-        <span className=" mb-[12px] mt-[22px] ml-[25px] text-lg font-semibold">
-          <p>{truncateAddress(rentDetails.bookingAccount)}</p>
-        </span>
-        <div className=" flex ml-[28px] gap-4">
-          <p>Name: {rentDetails.name} </p>
-          <span className=" flex flex-row gap-2 mr-5 justify-center items-start">
-            <p>NIG</p>
-          </span>
-        </div>
-        <div className=" ml-[28px] text-base font-medium  mt-2">
-          <p>Destination: {rentDetails.destination} </p>
-          <p>Trip Fee: {convertHireAmount}</p>
-        </div>
-      </div>
+        {address == rentDetails.bookingAccount ? (
+            <div className=" w-[402px] h-[270px] bg-[#111113] text-white rounded-lg flex flex-col justify-center  max-sm:w-[350px]">
+            <div className=" flex justify-between px-4 items-center mt-[20px]">
+              {identiconTemplate(rentDetails.bookingAccount, 12)}
+              {rentDetails.paid == false ? (
+                <button
+                className=" rounded-lg w-[100px] h-[44px] border-black border bg-white text-black font-medium"
+                onClick={payment}
+              >
+                Payment
+              </button>
+              ) : ( <button
+                className=" rounded-lg w-[100px] h-[44px] border-black border bg-white text-black font-medium"
+              >
+                Completed
+              </button>)}
+            </div>
+            <span className=" mb-[12px] mt-[22px] ml-[25px] text-lg font-semibold">
+              <p>{truncateAddress(rentDetails.bookingAccount)}</p>
+            </span>
+            <div className=" flex ml-[28px] gap-4">
+              <p>Name: {rentDetails.name} </p>
+              <span className=" flex flex-row gap-2 mr-5 justify-center items-start">
+               
+              </span>
+            </div>
+            <div className=" ml-[28px] text-base font-medium  mt-2">
+              <p>Destination: {rentDetails.destination} </p>
+              <p>Trip Fee: {convertHireAmount}</p>
+            </div>
+          </div>
+        ): (
+            <>
+                <p className=" text-center">Your have no hire History with this Car</p>
+            </>
+        )}
+      
     </div>
   );
 };
