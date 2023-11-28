@@ -30,7 +30,7 @@ contract CarBooking is AccessControl {
         OUT_OF_SERVICE
     }
 
-     enum ORDERSTATUS {
+     enum OrderStatus {
         OPEN,
         INPROGRESS,
         CANCELLED,
@@ -55,7 +55,7 @@ contract CarBooking is AccessControl {
         uint256 bookingPrice;
         uint256 rentCar;
         CarStatus carStatus;
-        ORDERSTATUS orderStatus;
+        OrderStatus orderStatus;
         Rent[] carRent; // Store the indices of rents for this car
     }
 
@@ -89,13 +89,13 @@ contract CarBooking is AccessControl {
 
     function carApprove (uint256 _carId) public onlyAdmin {
         Car storage car = cars[_carId];
-        require(car.carStatus == CarStatus.NOTACCEPT, "car did not meetup to our service");
+        require(car.carStatus == CarStatus.NOTACCEPT, "car did not meetup to our service or already accepted");
         car.carStatus = CarStatus.ACCEPTED;
     }
 
     function rejectCar (uint256 _carId) public onlyAdmin {
         Car storage car = cars[_carId];
-        require(car.carStatus == CarStatus.ACCEPTED, "car already Accept");
+        require(car.carStatus == CarStatus.ACCEPTED, "car not Accept");
         car.carStatus = CarStatus.NOTACCEPT;
     }
 
@@ -105,20 +105,20 @@ contract CarBooking is AccessControl {
         car.carStatus = CarStatus.OUT_OF_SERVICE;
     }
     
-    function addRent(uint256 _carID, string memory _name, string memory _destination, uint256 _amount) public {
+    function addRent(uint256 _carID, string memory _name, string memory _destination) public {
         require(_carID < carLength, "Invalide Car index");
         Car storage car = cars[_carID];
         require(car.carStatus == CarStatus.ACCEPTED , "Car is not approve for useage");
-        require(car.orderStatus == ORDERSTATUS.OPEN , "Car is alreadly on hire");
+        require(car.orderStatus == OrderStatus.OPEN , "Car is alreadly on hire");
         Rent memory newRent = Rent({
             carID: _carID,
             BookingAcount: msg.sender,
             name: _name,
             destination: _destination,
-            amount: _amount,
+            amount: car.bookingPrice,
             paid: false
         });
-        cars[_carID].orderStatus = ORDERSTATUS.INPROGRESS; 
+        cars[_carID].orderStatus = OrderStatus.INPROGRESS; 
         cars[_carID].carRent.push(newRent);
     }
 
@@ -126,7 +126,8 @@ contract CarBooking is AccessControl {
         address, address, string memory, string memory,
         string memory, uint256,
         uint256,
-        CarStatus
+        CarStatus, 
+        OrderStatus
     ) {
         Car storage car = cars[_index];
         return (
@@ -137,7 +138,8 @@ contract CarBooking is AccessControl {
             car.plateNumber,
             car.bookingPrice,
             car.rentCar,
-            car.carStatus
+            car.carStatus,
+            car.orderStatus
         );
     }
     function getRent(uint256 _index) public view returns (
@@ -169,13 +171,14 @@ contract CarBooking is AccessControl {
 
     
 
-    function carRentPayment(uint256 _rentId) external payable  {
-        require(msg.value > cars[_rentId].bookingPrice, "Value sending must be greater than booking price");
-         require(IERC20Token(cUsdTokenAddress).transferFrom(
+    function carRentPayment(uint256 _index) external payable  {
+        Car storage car = cars[_index];
+        require(IERC20Token(cUsdTokenAddress).transferFrom(
             msg.sender,
-            cars[_rentId].owner,
-            msg.value
-         ));
-    cars[_rentId].orderStatus = ORDERSTATUS.INPROGRESS; 
+            cars[_index].owner,
+            car.bookingPrice
+         ), "Transfer failed");
+        car.carRent[_index].paid = true;
+        cars[_index].orderStatus = OrderStatus.OPEN; 
     }
 }

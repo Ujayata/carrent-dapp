@@ -3,18 +3,18 @@ import ERC20 from '../abis/erc20InstacnceAbi.json'
 import CarRent from "../abis/carrent.json"
 import { BigNumber } from "ethers";
 
-export const useContractTrans = (wasteAmount) => {
-    // const gasLimit = BigNumber.from(1000000)
+
+export const useContractTrans = (hireAmount) => {
+    const gasLimit = BigNumber.from(1000000)
 
     const { config } = usePrepareContractWrite({
-        address: ERC20.addres,
+        address: ERC20.address,
         abi: ERC20.abi,
         functionName: 'approve',
-        args: [CarRent.address, wasteAmount],
-        // overrides: {
-        //     gasLimit
-        // },
-        
+        args: [CarRent.address, hireAmount],
+        overrides: {
+            gasLimit
+        },
         onError: (err) => {
             console.log({ err });
         }

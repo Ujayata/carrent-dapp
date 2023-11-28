@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { IoCloseCircle } from "react-icons/io5";
 import { useDebounce } from "use-debounce";
-import { parseEther } from "viem";
+import { ethers } from "ethers";
 import { useContractSend } from "@/hooks/useContractWrite";
 import { toast } from "react-toastify";
 
@@ -28,7 +28,7 @@ const CarModal = () => {
   const [debouncebookingPrice] = useDebounce(bookingPrice, 500);
 
   //   convert the mininum car booking price
-  const convertBookingPrice = parseEther(
+  const convertBookingPrice = ethers.utils.parseEther(
     debouncebookingPrice.toString() || "0"
   );
 

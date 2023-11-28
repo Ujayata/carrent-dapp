@@ -45,7 +45,7 @@ const RentDetails = ({ params }) => {
   const getRentSt = useCallback(async () => {
     const result = await getStatus({ params });
     console.log(result);
-    setIsPaid(result);
+    setIsPaid(result[5]);
   }, [getStatus]);
   //
   useEffect(() => {
@@ -81,10 +81,9 @@ const RentDetails = ({ params }) => {
     }
   };
 
-  const convertCarHirePrice = ethers.formatEther(
+  const convertCarHirePrice = ethers.utils.formatEther(
     carDetails?.bookingPrice.toString()
   );
-  console.log(isPaid);
   return (
     <>
       <div className=" flex  justify-between">

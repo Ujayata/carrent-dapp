@@ -1,5 +1,5 @@
 {
-    "address": "0x09c1Fd28e743b5c9314540AFeE4ABEcFa2D4a89C",
+    "address": "0x13C0847780C1281857eEb0582408025C710CCE0b",
     "abi": [
       {
         "inputs": [],
@@ -159,11 +159,6 @@
             "internalType": "string",
             "name": "_destination",
             "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "_amount",
-            "type": "uint256"
           }
         ],
         "name": "addRent",
@@ -201,7 +196,7 @@
         "inputs": [
           {
             "internalType": "uint256",
-            "name": "_rentId",
+            "name": "_index",
             "type": "uint256"
           }
         ],
@@ -261,7 +256,7 @@
             "type": "uint8"
           },
           {
-            "internalType": "enum CarBooking.ORDERSTATUS",
+            "internalType": "enum CarBooking.OrderStatus",
             "name": "orderStatus",
             "type": "uint8"
           }
@@ -329,6 +324,11 @@
           },
           {
             "internalType": "enum CarBooking.CarStatus",
+            "name": "",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum CarBooking.OrderStatus",
             "name": "",
             "type": "uint8"
           }

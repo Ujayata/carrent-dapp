@@ -41,7 +41,7 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
 
   console.log(carData?.bookingPrice)
 
-  const convertCarHirePrice = ethers.formatEther(
+  const convertCarHirePrice = ethers.utils.formatEther(
     carData?.bookingPrice.toString()
   )
 

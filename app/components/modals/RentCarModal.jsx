@@ -2,7 +2,7 @@
 import { IoCloseCircle } from 'react-icons/io5'
 import React, { useState } from 'react'
 import { useDebounce } from 'use-debounce'
-import { parseEther } from 'ethers'
+import { ethers } from 'ethers'
 import { toast } from "react-toastify"
 import { useContractSend } from '@/hooks/useContractWrite'
 
@@ -11,28 +11,27 @@ const RentCarModal = ({ id }) => {
     const [Name, setName] = useState("")
     const [destination, setDestination] = useState("")
     const [loading, setLoading] = useState(false)
-    const [amount, setAmount] = useState("")
+    // const [amount, setAmount] = useState("")
 
     const handleClear = () => {
       setName("")
       setDestination("")
-      setAmount("")
     }
-    const isFormFilled = Name && destination && amount
+    const isFormFilled = Name && destination
 
     const [ debouncedName ] = useDebounce(Name, 500);
     const [ debounceDestination ] = useDebounce(destination, 500);
-    const [ debounceAmount ] = useDebounce(amount, 500)
+    // const [ debounceAmount ] = useDebounce(amount, 500)
 
-    const convertHireAmount = parseEther(
-      debounceAmount.toString() || "0"
-    );
+    // const convertHireAmount = ethers.utils.parseEther(
+    //   debounceAmount.toString() || "0"
+    // );
 
     const { write: rentCar, error: err, isError } = useContractSend("addRent", [
       id,
       debouncedName, 
       debounceDestination,
-      debounceAmount
+      // debounceAmount
     ])
 
     console.log(err?.message)
@@ -107,17 +106,6 @@ const RentCarModal = ({ id }) => {
                   name="Destination"
                   id="destination"
                   placeholder="Please Enter you destination"
-                />
-              </div>
-
-              <div className="mb-8">
-                <input
-                  type="number"
-                  onChange={(e) => setAmount(e.target.value)}
-                  className=" border-4 w-full border-[#EFAE07] px-4 py-2 rounded-xl"
-                  name="rideAmount"
-                  id="rideAmount"
-                  placeholder="Enter Ride fee"
                 />
               </div>
               <div className=" flex justify-between">

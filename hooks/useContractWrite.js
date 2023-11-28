@@ -1,5 +1,5 @@
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { toBigInt } from 'ethers';
+import { BigNumber } from 'ethers';
 import CarRent from "../abis/carrent.json"
 import { toast } from "react-toastify"
 
@@ -7,7 +7,7 @@ export const useContractSend = (functionName, args) => {
     // gas limit to use when sending transaction
 
     // const gasList = 
-    const gasLimit = toBigInt(1000000)
+    const gasLimit = BigNumber.from(1000000)
 
     const {config, error} = usePrepareContractWrite({
         // the address of the car rent contract
