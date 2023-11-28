@@ -4,18 +4,7 @@ import ERC20 from "@/abis/erc20InstacnceAbi.json";
 import carRent from "@/abis/carrent.json"
 
 
-export const approveCar = async ({ id }) => {
-  const { writeAsync: approve } = useContractSend("carApprove", [id]);
 
-  if (!approve) throw new Error("Failed to approve car");
-  try {
-    await toast.promise(approve(), {
-      pending: "Approving Car",
-      success: "Successfully approved",
-      error: "Unexpected Error",
-    });
-  } catch (error) {}
-};
 
 export const approveMsg = async (amount) => {
  try {
