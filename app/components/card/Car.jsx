@@ -5,16 +5,17 @@ import { FaCopy, FaStar } from "react-icons/fa";
 import { useAccount } from "wagmi";
 import { useContractCall } from "@/hooks/useContractRead";
 import { useContractSend } from "@/hooks/useContractWrite";
-import { toast } from "react-toastify";
+
 import { ethers } from "ethers";
 import Link from "next/link";
 import Image from "next/image";
 
 
-const CarItem = ({ id, setError, setLoading, clear }) => {
+const CarItem = ({ id }) => {
+
   // to read from the contract of the details of item to be display
   const { data: getCars } = useContractCall("getCars", [id], true);
-  const { writeAsync: approve} = useContractSend("carApprove", [id])
+
   const { address } = useAccount()
 
   // to get items in the getCars return data
@@ -39,24 +40,11 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
 
   if(!carData) return null;
 
-  console.log(carData?.bookingPrice)
-
   const convertCarHirePrice = ethers.utils.formatEther(
     carData?.bookingPrice.toString()
   )
 
 
-  const approveCar = async () => {
-    if (!approve) throw new Error("Failed to approve car")
-    try {
-      await toast.promise(approve(), {
-        pending: "Approving Car",
-        success: "Successfully approved",
-        error: "Unexpected Error"
-      })
-    } catch (error) {
-    }
-  }
   // top-14 left-28
   return (
     <>
@@ -81,7 +69,7 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
               <p className="pt-2">{carData.plateNumber}</p>
             </span>
           </div>
-          <div className=" text-center mt-4 flex flex-row gap-9 ">
+          <div className=" text-center mt-4 flex flex-row gap-9 mb-3">
             <div>
               <p className="rounded-md border-1 border cursor-pointer bg-white px-1">
               Booking Price
@@ -90,18 +78,17 @@ const CarItem = ({ id, setError, setLoading, clear }) => {
             </div>
             <div>
               <p className="rounded-md border-1 border cursor-pointer bg-white px-2 pt-[-3px]">
-                Hire Rate
+                Car Status
               </p>
               <span className=" cursor-pointer flex flex-row justify-center items-center pt-2">
-                <p>{carData.rentCar}</p>
-                <FaStar width={24} height={24} />
+                <p>{carData.carStatus == 0 ? <p>Under Review</p> : carData.carStatus == 1 ? <p>Approved</p> : carData.carStatus == 2 ? <p>Rejected</p> : <p>Aprroved</p>}</p>
               </span>
             </div>
           </div>
         </div>
       </div>
-      {/* {carData.carStatus == 0 ? <p className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Can't Hire</p> : <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link> } */}
-      <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link>
+      { carData.owner == address || carData.admin == address ? (<Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Check car</Link>) :
+       carData.carStatus == 0 ? <p className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Can't Hire</p> : <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link>}
     </div>
     </>
   );

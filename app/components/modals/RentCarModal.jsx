@@ -17,7 +17,7 @@ const RentCarModal = ({ id }) => {
       setName("")
       setDestination("")
     }
-    const isFormFilled = Name && destination
+    const isFormFilled = Name.length > 3 && destination.length > 4
 
     const [ debouncedName ] = useDebounce(Name, 500);
     const [ debounceDestination ] = useDebounce(destination, 500);

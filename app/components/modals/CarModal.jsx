@@ -14,14 +14,19 @@ const CarModal = () => {
   const [plateNumber, setPlateNumber] = useState("");
   const [bookingPrice, setBookingPrice] = useState(0);
 
+  // form validation
   const isFormFilled = model && carImage && plateNumber && bookingPrice;
 
+/**
+ * Clears the model, car image, plate number, and booking price.
+ */
   const handleClear = () => {
     setModel("");
     setcarImage("");
     setPlateNumber("");
     setBookingPrice(0);
   };
+  // the debounce value to input to the blockchain
   const [debounceModel] = useDebounce(model, 500);
   const [debounceCarImage] = useDebounce(carImage, 500);
   const [debouncePlateNumber] = useDebounce(plateNumber, 500);
@@ -40,6 +45,13 @@ const CarModal = () => {
     convertBookingPrice,
   ]);
 
+  /**
+   * Handles the recording of a car.
+   *
+   * @return {Promise<void>} This function does not return anything.
+   * @throws {string} If there is a failure to record the car.
+   * @throws {Error} If the form details are not filled correctly.
+   */
   const handleRecordCar = async () => {
     if (!recordCar) throw "Failed to record Car";
     setloading("Adding Car");

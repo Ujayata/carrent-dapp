@@ -20,6 +20,7 @@ const RentHistory = ({ id }) => {
   } = useContractCall("getRent", [id], true);
   const [rentDetails, setRentDetails] = useState(null);
 
+  
   const getHiredDetails = useCallback(() => {
     if (!getRent) return null;
     setRentDetails({
@@ -47,6 +48,13 @@ const RentHistory = ({ id }) => {
   ]);
 
 
+/**
+ * Handles the payment process for the ERC20 cUSD token spend on behalf.
+ *
+ * @throws {string} Failed process allowance
+ * @throws {Error} Failed to pay hire ment
+ * @return {Promise<void>} A promise that resolves when the payment process is complete
+ */
   const handlePayment = async () => {
         if (!approve) throw "Failed process allowance";
         //  approve payment for the ERC20 cUSD token spend on behalf
@@ -79,15 +87,13 @@ const RentHistory = ({ id }) => {
         error: "unexpected error",
       });
     } catch (e) {
-    //   console.log({ e });
+      console.log({ e });
     }
   };
 
   if (!rentDetails) return null;
 
   const convertHireAmount = ethers.utils.formatEther(rentDetails?.amount?.toString());
-  console.log(rentDetails?.amount.toString());
-  console.log(rentDetails.carID)
 
   return (
     <div className=" flex items-center justify-center mt-5">
@@ -124,7 +130,7 @@ const RentHistory = ({ id }) => {
           </div>
         ): (
             <>
-                <p className=" text-center">Your have no hire History with this Car</p>
+                <p className=" text-center">This wallet address have no History with this Car</p>
             </>
         )}
       

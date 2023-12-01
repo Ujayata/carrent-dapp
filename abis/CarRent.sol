@@ -121,6 +121,7 @@ contract CarBooking is AccessControl {
             paid: false
         });
         rentLength++;
+        
         cars[_carID].orderStatus = OrderStatus.INPROGRESS; 
         cars[_carID].carRent.push(newRent);
     }

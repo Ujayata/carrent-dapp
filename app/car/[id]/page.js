@@ -1,10 +1,8 @@
 'use client'
 import React from "react";
-import merce from "../../../public/images/mercedes.png";
 import Navbar from "@/app/components/Navbar";
-import CarDetails from "@/app/components/carDetails";
 import RentCarModal from "@/app/components/modals/RentCarModal";
-import RentsDetails from "@/app/components/RentsDetails";
+import CarDetails from "@/app/components/CarDetails";
 import RentHistory from "@/app/components/card/RentHistory";
 import HireTrnsactions from "@/app/components/listcard/HireTrnsactions";
 
@@ -19,8 +17,7 @@ const CarBook = ({ params }) => {
           <div>
             <h1 className=" font-bold text-2xl text-center">Rent Car</h1>
           </div>
-          {/* <CarDetails /> */}
-          <RentsDetails params={params.id} />
+          <CarDetails params={params.id} />
           <div>
             {/* <RentHistory id={params.id} /> */}
           </div>

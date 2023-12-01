@@ -1,5 +1,5 @@
 {
-    "address": "0xC3EeB538E5979FfAD8a58d295d4C4966290fBa80",
+    "address": "0xDd0d96a57854B9c37CFC99FF3c90772F6191c55d",
     "abi": [
       {
         "inputs": [],
@@ -254,11 +254,6 @@
             "internalType": "enum CarBooking.CarStatus",
             "name": "carStatus",
             "type": "uint8"
-          },
-          {
-            "internalType": "enum CarBooking.OrderStatus",
-            "name": "orderStatus",
-            "type": "uint8"
           }
         ],
         "stateMutability": "view",
@@ -324,11 +319,6 @@
           },
           {
             "internalType": "enum CarBooking.CarStatus",
-            "name": "",
-            "type": "uint8"
-          },
-          {
-            "internalType": "enum CarBooking.OrderStatus",
             "name": "",
             "type": "uint8"
           }

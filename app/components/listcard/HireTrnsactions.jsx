@@ -6,16 +6,21 @@ const HireTrnsactions = () => {
   const { data } = useContractCall("getRentLength", [], true);
 
   const hireTxLenght = data ? Number(data.toString()) : 0;
-  console.log(hireTxLenght);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState("");
+  /**
+   * Clears error, success, and loading messages.
+   */
   const clearMessage = () => {
     setError("");
     setSuccess("");
     setLoading("");
   };
 
+  /**
+   * Gettin an Array An array of RentHistory components.
+   */
   const getHireTxLength = () => {
     if (!hireTxLenght) return null;
     const carHireTx = [];

@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Car Rent DApp - README
 
-## Getting Started
+Welcome to the Car Rent DApp! This decentralized application (DApp) is designed for car rental ventures, providing a streamlined process for users to hire cars. Car owners can set their own hire rates, and the admin plays a crucial role in approving suitable cars for hire, ensuring the company's image is protected.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- User-Friendly Interface
+- Car Listing: Car owners can list their vehicles for hire as well end user
+- Deployed contract wallet address which is the admin approve and reject cars that are not suitable fo the company 
+- Transaction History Users can view their previous transactions with address they have transact with 
+- Real-time Availability-Instant updates on car availability, users can check if a particular car is currently on hire
+- Payment Handling: Secure payment processing, users can only hire a car if the previous user has completed the payment.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Technologies
+CarRent is a project that utilizes the Toastify, RainbowKit, and Smart Contract technologies with Next.js.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+To run the project locally, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository: `git clone https://github.com/your-username/CarRent.git`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Once the project is running, you can access it in your browser at `http://localhost:3000`. Here are some usage examples:
 
-## Deploy on Vercel
+- Connect your wallet
+- Navigate to Hire cars on your navbar
+- Rent a car of your choice
+- Make payment and View rental history
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you would like to contribute to CarRent, please follow these guidelines:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b my-feature`
+3. Make your changes and commit them: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin my-feature`
+5. Submit a pull request
