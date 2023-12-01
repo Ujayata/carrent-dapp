@@ -8,7 +8,6 @@ import HireTrnsactions from "@/app/components/listcard/HireTrnsactions";
 
 const CarBook = ({ params }) => {
 
-  console.log(params)
   return (
     <div>
       <Navbar />
