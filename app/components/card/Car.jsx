@@ -88,7 +88,7 @@ const CarItem = ({ id }) => {
         </div>
       </div>
       { carData.owner == address || carData.admin == address ? (<Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Check car</Link>) :
-       carData.carStatus == 0 ? <p className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Can't Hire</p> : <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link>}
+       carData.carStatus == 0 ? <p className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Can`&apos`t Hire</p> : <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link>}
     </div>
     </>
   );
