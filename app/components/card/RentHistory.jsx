@@ -98,7 +98,7 @@ const RentHistory = ({ id, carId }) => {
   return (
     <div className="flex items-center justify-center flex-grow basis-[100px] mt-5">
         {address == rentDetails.bookingAccount ? (
-            <div className=" w-[402px] h-[270px] bg-[#111113] text-white rounded-lg flex flex-col justify-center  max-sm:w-[350px]">
+            <div className=" w-[402px] h-[270px] bg-[#1E002B] text-white rounded-lg flex flex-col justify-center  max-sm:w-[350px]">
             <div className=" flex justify-between px-4 items-center mt-[20px]">
               {identiconTemplate(rentDetails.bookingAccount, 12)}
               {rentDetails.paid == false ? (
