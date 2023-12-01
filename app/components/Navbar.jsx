@@ -17,13 +17,13 @@ export default function Navbar() {
       <nav className=" flex justify-between items-center mt-[30px]">
         <div className=" sm:flex cursor-pointer gap-3">
           <Link href="/">
-          <h3 className="text-[#2e37ba] text-4xl max-sm:text-2xl font-bold leading-none">
+          <h3 className="text-[#FCFF52] text-4xl max-sm:text-2xl font-bold leading-none">
             Car Tour
           </h3></Link>
         </div>
         <div className=" sm:flex cursor-pointer gap-3">
           <Link href="/car">
-          <h3 className="text-[#2e37ba] text-2xl max-sm:text-xl font-bold leading-none">
+          <h3 className="text-[#FCFF52] text-2xl max-sm:text-xl font-bold leading-none">
             Hire Car
           </h3></Link>
         </div>

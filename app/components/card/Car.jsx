@@ -48,8 +48,9 @@ const CarItem = ({ id }) => {
   // top-14 left-28
   return (
     <>
-    <div className="pt-4 container flex justify-center items-center flex-col">
-      <div className=" w-[23rem] bg-[#EFAE07] text-base font-semibold rounded-xl">
+    <div className="flex items-center justify-center flex-grow basis-[100px] mt-5">
+      <div className=" flex justify-center items-center flex-col">
+      <div className=" w-[23rem] bg-[#1E002B] text-base font-semibold rounded-xl">
         <div>
         <Image src={carData.image} className=' w-[100%] h-[100%]' decoding='async' alt='CarImage' width={200} height={200} />
         
@@ -57,38 +58,39 @@ const CarItem = ({ id }) => {
         <div className=" flex flex-col items-center justify-center pt-3">
           <div className=" flex flex-row gap-8 text-center">
             <span>
-              <p className=" px-1 rounded-md border-1 border cursor-pointer bg-white">
+              <p className=" px-1 rounded-md border-1 border cursor-pointer text-white">
                Car Name
               </p>
-              <p className="pt-2 text-xl">{carData.model}</p>
+              <p className="pt-2 text-xl text-white">{carData.model}</p>
             </span>
             <span>
-              <p className="rounded-md px-1 border-1 border cursor-pointer bg-white">
+              <p className="rounded-md px-1 border-1 border cursor-pointer text-white">
               Plate Number
               </p>
-              <p className="pt-2">{carData.plateNumber}</p>
+              <p className="pt-2 text-white">{carData.plateNumber}</p>
             </span>
           </div>
           <div className=" text-center mt-4 flex flex-row gap-9 mb-3">
             <div>
-              <p className="rounded-md border-1 border cursor-pointer bg-white px-1">
+              <p className="rounded-md border-1 border cursor-pointer text-white px-1">
               Booking Price
               </p>
-              <p className="pt-2">Hire @ $ {convertCarHirePrice}</p>
+              <p className="pt-2 text-white">Hire @ $ {convertCarHirePrice}</p>
             </div>
             <div>
-              <p className="rounded-md border-1 border cursor-pointer bg-white px-2 pt-[-3px]">
+              <p className="rounded-md border-1 border cursor-pointer text-white px-2 pt-[-3px]">
                 Car Status
               </p>
-              <span className=" cursor-pointer flex flex-row justify-center items-center pt-2">
+              <span className=" cursor-pointer flex flex-row justify-center items-center pt-2 text-white">
                 <p>{carData.carStatus == 0 ? <p>Under Review</p> : carData.carStatus == 1 ? <p>Approved</p> : carData.carStatus == 2 ? <p>Rejected</p> : <p>Aprroved</p>}</p>
               </span>
             </div>
           </div>
         </div>
       </div>
-      { carData.owner == address || carData.admin == address ? (<Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Check car</Link>) :
-       carData.carStatus == 0 ? <p className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Can`&apos`t Hire</p> : <Link href={`/car/${id}`} className=" text-[#2e37ba] p-2 bg-slate-200 rounded-b-lg text-lg">Hire Me</Link>}
+      { carData.owner == address || carData.admin == address ? (<Link href={`/car/${id}`} className=" text-white p-2 bg-[#1E002B] rounded-b-lg text-lg">Check car</Link>) :
+       carData.carStatus == 0 ? <p className=" text-white p-2 bg-[#1E002B] rounded-b-lg text-lg">Not available</p> : <Link href={`/car/${id}`} className=" text-white p-2 bg-[#1E002B] rounded-b-lg text-lg">Hire Me</Link>}
+    </div>
     </div>
     </>
   );

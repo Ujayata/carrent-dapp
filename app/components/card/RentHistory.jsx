@@ -10,14 +10,14 @@ import { useContractSend } from "@/hooks/useContractWrite";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 
-const RentHistory = ({ id }) => {
+const RentHistory = ({ id, carId }) => {
   const { address } = useAccount();
 
   const {
     data: getRent,
     isLoading,
     error,
-  } = useContractCall("getRent", [id], true);
+  } = useContractCall("getRent", [carId, id], true);
   const [rentDetails, setRentDetails] = useState(null);
 
   
@@ -43,7 +43,7 @@ const RentHistory = ({ id }) => {
     rentDetails?.amount?.toString() || "1"
   );
 
-  const { writeAsync: hirePayment } = useContractSend("carRentPayment", [
+  const { writeAsync: hirePayment } = useContractSend("carRentPayment", [ carId,
     Number(id)
   ]);
 
@@ -96,7 +96,7 @@ const RentHistory = ({ id }) => {
   const convertHireAmount = ethers.utils.formatEther(rentDetails?.amount?.toString());
 
   return (
-    <div className=" flex items-center justify-center mt-5">
+    <div className="flex items-center justify-center flex-grow basis-[100px] mt-5">
         {address == rentDetails.bookingAccount ? (
             <div className=" w-[402px] h-[270px] bg-[#111113] text-white rounded-lg flex flex-col justify-center  max-sm:w-[350px]">
             <div className=" flex justify-between px-4 items-center mt-[20px]">
@@ -130,7 +130,7 @@ const RentHistory = ({ id }) => {
           </div>
         ): (
             <>
-                <p className=" text-center">This wallet address have no History with this Car</p>
+                {/* <p className=" text-center text-white font-normal">This wallet address have no History with this Car</p> */}
             </>
         )}
       

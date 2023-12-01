@@ -11,19 +11,19 @@ import { getStatus } from "@/app/helper/getRentStatus";
 import { useContractSend } from "@/hooks/useContractWrite";
 import { toast } from "react-toastify";
 import LoadingIcon from "./LoadingIcon";
-import erc20 from "@/abis/erc20InstacnceAbi.json"
+import erc20 from "@/abis/erc20InstacnceAbi.json";
 
 const CarDetails = ({ params }) => {
   const { data: getCars } = useContractCall("getCars", [params], true);
   const [carDetails, setCarDetails] = useState(null);
   const [isPaid, setIsPaid] = useState();
-  const [displayBalance, setdisplayBalance] = useState(false)
+  const [displayBalance, setdisplayBalance] = useState(false);
 
   const { address, isConnected } = useAccount();
   const { data: cUSDBalance } = useBalance({
     address,
-    token: erc20.address
-  })
+    token: erc20.address,
+  });
 
   const { writeAsync: approve, isLoading: aprroveLoading } = useContractSend(
     "carApprove",
@@ -51,15 +51,16 @@ const CarDetails = ({ params }) => {
   const getRentSt = useCallback(async () => {
     const result = await getStatus({ params });
     console.log(result);
-    setIsPaid(result[5]);
+    const res = result;
+    console.log(res)
+    setIsPaid(res);
   }, [getStatus]);
-  //
-  
+  console.log(isPaid)
+
   useEffect(() => {
     // to display the cusd balance
     getCarDetails();
     getRentSt();
-
   }, [getCarDetails]);
 
   if (!carDetails) return null;
@@ -90,9 +91,6 @@ const CarDetails = ({ params }) => {
     }
   };
 
-  
-  
-
   const convertCarHirePrice = ethers.utils.formatEther(
     carDetails?.bookingPrice.toString()
   );
@@ -104,14 +102,14 @@ const CarDetails = ({ params }) => {
             <div className="">
               {carDetails.carStatus == 0 ? (
                 <button
-                  className="border-2 border-[#06102b] p-2 text-black rounded-lg text-lg flex justify-center items-center"
+                  className="border-2 border-[#06102b] p-2 text-white bg-[#1E002B] rounded-lg text-lg flex justify-center items-center"
                   onClick={approveCar}
                 >
                   {aprroveLoading && <LoadingIcon />}
                   Approve
                 </button>
               ) : (
-                <button className=" cursor-not-allowed border-2 border-[#06102b] p-2 text-black rounded-lg text-lg flex justify-center items-center">
+                <button className=" cursor-not-allowed border-2 border-[#06102b] p-2 text-white bg-[#1E002B] rounded-lg text-lg flex justify-center items-center">
                   Approved
                 </button>
               )}
@@ -119,17 +117,14 @@ const CarDetails = ({ params }) => {
             <div>
               {carDetails.carStatus == 1 ? (
                 <button
-                  className="flex items-center justify-center border-2 border-[#06102b] p-2 text-black  rounded-lg text-lg "
+                  className="flex items-center justify-center border-2 border-[#06102b] p-2 text-white bg-[#1E002B]  rounded-lg text-lg "
                   onClick={rejectCar}
-                  
                 >
                   {rejectLoading && <LoadingIcon />}
                   Reject
                 </button>
               ) : (
-                <button
-                  className=" cursor-not-allowed flex items-center justify-center border-2 border-[#06102b] p-2 text-black rounded-lg text-lg "
-                >
+                <button className=" cursor-not-allowed flex items-center justify-center border-2 border-[#1E002B] p-2 text-white bg-[#1E002B] rounded-lg text-lg ">
                   Rejected
                 </button>
               )}
@@ -140,7 +135,15 @@ const CarDetails = ({ params }) => {
             <p></p>
           </div>
         )}
-      {isPaid == false ? "Not Available for hire" : <RentCarModal id={params} />}
+        {carDetails.carStatus == 1 ? (
+          isPaid == false ? (
+            "Not Available for hire"
+          ) : (
+            <RentCarModal id={params} />
+          )
+        ) : (
+          <p>Not availabe</p>
+        )}
       </div>
       {/* <RentCarModal id={params} /> */}
       <div className="pt-4 container  px-8 flex lg:flex-row justify-center items-center  lg:gap-[16rem] md:gap-[5rem] sm:gap-[5rem] max-sm:gap-[3rem] md:flex-col max-sm:flex-col">
@@ -154,7 +157,7 @@ const CarDetails = ({ params }) => {
             height={200}
           />
         </div>
-        <div className="  bg-white text-base font-semibold rounded-br-xl flex justify-center items-center text-center">
+        <div className=" text-base font-semibold rounded-br-xl flex justify-center items-center text-center">
           <div className=" flex justify-between items-center flex-col">
             <div className=" flex flex-row gap-8  text-center justify-center items-center space-x-9">
               <span>

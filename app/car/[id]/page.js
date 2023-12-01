@@ -19,7 +19,7 @@ const CarBook = ({ params }) => {
             {/* <RentHistory id={params.id} /> */}
           </div>
       <div>
-        <HireTrnsactions />
+        <HireTrnsactions carId={params.id} />
       </div>
         </div>
       </div>

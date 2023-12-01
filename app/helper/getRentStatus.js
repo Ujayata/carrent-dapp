@@ -9,7 +9,7 @@ export const getStatus = async ({ params }) => {
       functionName: 'getRent',
       args: [params]
     });
-    return rentData
+    return rentData[5]
   } catch (error) {
     // handle error
   }

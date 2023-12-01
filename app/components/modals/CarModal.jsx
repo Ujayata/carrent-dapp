@@ -5,6 +5,7 @@ import { useDebounce } from "use-debounce";
 import { ethers } from "ethers";
 import { useContractSend } from "@/hooks/useContractWrite";
 import { toast } from "react-toastify";
+import LoadingIcon from "../LoadingIcon";
 
 const CarModal = () => {
   const [toggle, setToggle] = useState(false);
@@ -25,6 +26,7 @@ const CarModal = () => {
     setcarImage("");
     setPlateNumber("");
     setBookingPrice(0);
+    setloading('')
   };
   // the debounce value to input to the blockchain
   const [debounceModel] = useDebounce(model, 500);
@@ -54,7 +56,7 @@ const CarModal = () => {
    */
   const handleRecordCar = async () => {
     if (!recordCar) throw "Failed to record Car";
-    setloading("Adding Car");
+    setloading("Registering Car");
     if (!isFormFilled) throw new Error("Please fill the correct details");
 
     const transactTx = await recordCar();
@@ -91,7 +93,7 @@ const CarModal = () => {
         type="button"
         data-bs-toggle="modalBioData"
         data-bs-target="#modalCenter"
-        className=" text-white font-bold text-lg border-2 rounded-xl py-1 bg-[#06102b] px-3 flex items-center mr-10 flex-col text-center drop-shadow-xl"
+        className=" text-white font-bold text-lg border-2 rounded-xl py-1 bg-[#1E002B] px-3 flex items-center mr-10 flex-col text-center drop-shadow-xl"
         onClick={() => setToggle(true)}
       >
         Add Car
@@ -152,7 +154,7 @@ const CarModal = () => {
                   className=" border-4 text-white border-[#EFAE07] bg-[#06102b] px-4 py-2 rounded-full"
                   disabled={!!loading || !isFormFilled || !recordCar}
                 >
-                  {loading ? loading : "Adding Car"}
+                  {loading ? loading : "Register"}
                 </button>
                 <button type="button" onClick={() => setToggle(false)}>
                   <IoCloseCircle size={30} color="#06102b" />

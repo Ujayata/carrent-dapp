@@ -1,5 +1,5 @@
 {
-    "address": "0xDd0d96a57854B9c37CFC99FF3c90772F6191c55d",
+    "address": "0x640F000845EB6DE2C67D040F99C1cF4C361196Fa",
     "abi": [
       {
         "inputs": [],
@@ -198,6 +198,11 @@
             "internalType": "uint256",
             "name": "_index",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_rendId",
+            "type": "uint256"
           }
         ],
         "name": "carRentPayment",
@@ -331,6 +336,11 @@
           {
             "internalType": "uint256",
             "name": "_index",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "_rentId",
             "type": "uint256"
           }
         ],

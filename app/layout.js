@@ -61,7 +61,7 @@ const wagmiConfig = createConfig({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#E7E3D4]`}>
       <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
       theme={lightTheme({
