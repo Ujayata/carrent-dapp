@@ -29,7 +29,7 @@ const Hero = () => {
         <div>
         <p className=" capitalize text-black text-xl max-sm:text-xs font-medium">safer ,faster and <br /> comfortable</p>
         <p className=" mt-[15px] text-black text-base font-normal max-sm:text-xs max-sm:mt-[3px]">Get in touch with <br /> our luxury cars</p>
-        <Link href="/car" className=" bg-[#21408E] rounded-3xl py-[4px] text-white px-[15px] max-sm:py-[2px] max-sm:px-[5px]  mt-[15px] max-sm:mt-[3px] max-sm:rounded-md max-sm:text-[10px]">Rent Now</Link>
+        <Link href="/car" className=" bg-[#1E002B] rounded-3xl py-[4px] text-white px-[15px] max-sm:py-[2px] max-sm:px-[5px]  mt-[15px] max-sm:mt-[3px] max-sm:rounded-md max-sm:text-[10px]">Rent Now</Link>
         </div>
       </div>
     </div>

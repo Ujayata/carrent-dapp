@@ -40,7 +40,7 @@ const BookCar = () => {
           <Image src={mercedies} alt="car" width={600} height={385} />
         </div>
         <div>
-          <h1 className=" mt-[30px] text-[#21408E] font-semibold text-[45px] mb-4">
+          <h1 className=" mt-[30px] text-[#1E002B] font-semibold text-[45px] mb-4">
             Our Services
           </h1>
           {ourServices.map((item, index) => {
