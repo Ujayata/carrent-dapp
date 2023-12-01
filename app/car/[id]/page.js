@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import Navbar from "@/app/components/Navbar";
-import CarDetails from "@/app/components/CarDetails";
+import CarDetails from "../../components/CarDetails";
 import HireTrnsactions from "@/app/components/listcard/HireTrnsactions";
 
 const CarBook = ({ params }) => {
