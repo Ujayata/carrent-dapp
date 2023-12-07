@@ -1,191 +1,161 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-interface IERC20Token {
-    function transfer(address, uint256) external returns (bool);
-    function approve(address, uint256) external returns (bool);
-    function transferFrom(address, address, uint256) external returns (bool);
-    function totalSupply() external view  returns (uint256);
-    function balanceOf(address) external view  returns (uint256);
-    function allowance(address, address) external view  returns (uint256);
-
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-}
-
-contract CarBooking is AccessControl {
-
-    // celo cUsd address
-    address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-
-    address admin;
-    uint256 public carLength;
-    uint256 public rentLength;
+contract CarBooking is Ownable, Pausable {
 
     enum CarStatus {
-        NOTACCEPT,
+        NOT_ACCEPTED,
         ACCEPTED,
         OUT_OF_SERVICE
     }
 
-     enum OrderStatus {
+    enum OrderStatus {
         OPEN,
-        INPROGRESS,
+        IN_PROGRESS,
         CANCELLED,
         COMPLETED
     }
-    
+
     struct Rent {
         uint256 carID;
         address carAddress;
-        address BookingAcount;
+        address bookingAccount;
         string name;
         string destination;
         uint256 amount;
         bool paid;
     }
-    
+
     struct Car {
         address payable owner;
-        address admin;
         string model;
         string image;
         string plateNumber;
         uint256 bookingPrice;
-        uint256 rentCar;
         CarStatus carStatus;
         OrderStatus orderStatus;
-        Rent[] carRent; // Store the indices of rents for this car
+        Rent[] carRents; // Store the indices of rents for this car
     }
 
-    constructor() {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        admin = msg.sender;
+    mapping (uint256 => Car) public cars;
+
+    IERC20 private cUsdToken;
+
+    event CarAdded(uint256 indexed carID, address indexed owner, string model, string plateNumber);
+    event CarStatusChanged(uint256 indexed carID, CarStatus newStatus);
+    event RentAdded(uint256 indexed carID, address indexed bookingAccount, string name, string destination, uint256 amount);
+    event RentPaid(uint256 indexed carID, address indexed bookingAccount, uint256 amount);
+
+    constructor(address _cUsdTokenAddress) {
+        require(_cUsdTokenAddress != address(0), "Invalid cUsdTokenAddress");
+        cUsdToken = IERC20(_cUsdTokenAddress);
+    }
+
+    modifier onlyCarOwner(uint256 _carID) {
+        require(msg.sender == cars[_carID].owner, "Only the car owner can call this function");
+        _;
     }
 
     modifier onlyAdmin() {
-        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Only admin can call this function");
+        require(owner() == msg.sender, "Only admin can call this function");
         _;
     }
-    
-    mapping (uint256 => Car) public cars;
 
-    
-    function addCar(string memory _model, string memory _imageCar,string memory _plateNumber, uint256 _bookingPrice) public {
-         // Use carLength as the carID
-        
-        Car storage newCar = cars[carLength];
-        newCar.owner = payable (msg.sender);
-        newCar.admin = admin;
+    function addCar(string memory _model, string memory _imageCar, string memory _plateNumber, uint256 _bookingPrice) external onlyOwner {
+        uint256 carID = cars.length;
+        Car storage newCar = cars[carID];
+        newCar.owner = payable(msg.sender);
         newCar.model = _model;
         newCar.image = _imageCar;
         newCar.plateNumber = _plateNumber;
         newCar.bookingPrice = _bookingPrice;
-        // newCar.carStatus = CarStatus.ACCEPTED;
-        
-        carLength++;
+
+        emit CarAdded(carID, msg.sender, _model, _plateNumber);
     }
 
-    function carApprove (uint256 _carId) public onlyAdmin {
-        Car storage car = cars[_carId];
-        require(car.carStatus == CarStatus.NOTACCEPT, "car did not meetup to our service or already accepted");
-        car.carStatus = CarStatus.ACCEPTED;
-    }
-
-    function rejectCar (uint256 _carId) public onlyAdmin {
-        Car storage car = cars[_carId];
-        require(car.carStatus == CarStatus.ACCEPTED, "car not Accept");
-        car.carStatus = CarStatus.NOTACCEPT;
-    }
-
-    function outOfServiceCar (uint256 _carId) public onlyAdmin {
-        Car storage car = cars[_carId];
-        require(car.carStatus == CarStatus.ACCEPTED, "Car is not approve");
-        car.carStatus = CarStatus.OUT_OF_SERVICE;
-    }
-    
-    function addRent(uint256 _carID, string memory _name, string memory _destination) public {
-        require(_carID < carLength, "Invalide Car index");
+    function changeCarStatus(uint256 _carID, CarStatus _newStatus) external onlyAdmin {
         Car storage car = cars[_carID];
-        require(car.carStatus == CarStatus.ACCEPTED , "Car is not approve for useage");
-        require(car.orderStatus == OrderStatus.OPEN , "Car is alreadly on hire");
+        require(car.carStatus != _newStatus, "Car is already in the requested status");
+
+        car.carStatus = _newStatus;
+        emit CarStatusChanged(_carID, _newStatus);
+    }
+
+    function addRent(uint256 _carID, string memory _name, string memory _destination) external whenNotPaused {
+        Car storage car = cars[_carID];
+        require(car.carStatus == CarStatus.ACCEPTED, "Car is not approved for usage");
+        require(car.orderStatus == OrderStatus.OPEN, "Car is already on hire");
+
         Rent memory newRent = Rent({
             carID: _carID,
             carAddress: car.owner,
-            BookingAcount: msg.sender,
+            bookingAccount: msg.sender,
             name: _name,
             destination: _destination,
             amount: car.bookingPrice,
             paid: false
         });
-        rentLength++;
-        
-        cars[_carID].orderStatus = OrderStatus.INPROGRESS; 
-        cars[_carID].carRent.push(newRent);
+
+        car.orderStatus = OrderStatus.IN_PROGRESS;
+        car.carRents.push(newRent);
+
+        emit RentAdded(_carID, msg.sender, _name, _destination, car.bookingPrice);
     }
 
-    function getCars(uint256 _index) public view returns (
-        address, address, string memory, string memory,
-        string memory, uint256,
-        uint256,
-        CarStatus, 
-        OrderStatus
+    function payRent(uint256 _carID) external whenNotPaused onlyCarOwner(_carID) {
+        Car storage car = cars[_carID];
+        Rent storage rent = car.carRents[car.carRents.length - 1];
+
+        require(!rent.paid, "Rent is already paid");
+        require(cUsdToken.transferFrom(msg.sender, address(this), rent.amount), "Transfer failed");
+
+        rent.paid = true;
+        car.orderStatus = OrderStatus.OPEN;
+
+        emit RentPaid(_carID, msg.sender, rent.amount);
+    }
+
+    function getCar(uint256 _carID) external view returns (
+        address owner,
+        string memory model,
+        string memory image,
+        string memory plateNumber,
+        uint256 bookingPrice,
+        CarStatus carStatus,
+        OrderStatus orderStatus
     ) {
-        Car storage car = cars[_index];
+        Car storage car = cars[_carID];
         return (
             car.owner,
-            car.admin,
             car.model,
             car.image,
             car.plateNumber,
             car.bookingPrice,
-            car.rentCar,
             car.carStatus,
             car.orderStatus
         );
     }
-    function getRent(uint256 _index) public view returns (
-        uint256,
-        address,
-        address,
-        string memory,
-        string memory,
-        uint256,
-        bool
+
+    function getRent(uint256 _carID, uint256 _rentIndex) external view returns (
+        address carAddress,
+        address bookingAccount,
+        string memory name,
+        string memory destination,
+        uint256 amount,
+        bool paid
     ) {
-        Car storage car = cars[_index];
+        Rent storage rent = cars[_carID].carRents[_rentIndex];
         return (
-            car.carRent[_index].carID,
-            car.carRent[_index].carAddress,
-            car.carRent[_index].BookingAcount,
-            car.carRent[_index].name,
-            car.carRent[_index].destination,
-            car.carRent[_index].amount,
-            car.carRent[_index].paid
+            rent.carAddress,
+            rent.bookingAccount,
+            rent.name,
+            rent.destination,
+            rent.amount,
+            rent.paid
         );
-    }
-
-    function getCarLength() public view returns(uint256) {
-        return carLength;
-    }
-
-    function getRentLength() public view returns(uint256) {
-        return rentLength;
-    }
-
-    
-
-    function carRentPayment(uint256 _index) external payable  {
-        Car storage car = cars[_index];
-        require(msg.sender == car.carRent[_index].BookingAcount, "Must be the owner");
-        require(IERC20Token(cUsdTokenAddress).transferFrom(
-            msg.sender,
-            cars[_index].owner,
-            car.bookingPrice
-         ), "Transfer failed");
-        car.carRent[_index].paid = true;
-        cars[_index].orderStatus = OrderStatus.OPEN; 
     }
 }
